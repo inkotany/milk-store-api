@@ -1,0 +1,8 @@
+export enum Category {
+  FRESH_MILK = 'FRESH_MILK',
+  POWDERED_MILK = 'POWDERED_MILK',
+  CHEESE = 'CHEESE',
+  YOGURT = 'YOGURT',
+  BUTTER = 'BUTTER',
+  CREAM = 'CREAM',
+}
