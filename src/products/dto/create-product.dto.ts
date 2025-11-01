@@ -1,16 +1,22 @@
-import { Category } from '../enums/category.enum';
-import { IsEnum, IsNumber, IsString } from 'class-validator';
+import {
+  IsString,
+  MinLength,
+  MaxLength,
+  IsNumber,
+  IsPositive,
+} from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
+  @MinLength(2)
+  @MaxLength(200)
   name: string;
 
-  @IsEnum(Category)
-  category: Category;
-
   @IsNumber()
+  @IsPositive()
   price: number;
 
-  @IsNumber()
-  quantity: number;
+  @IsString()
+  @MinLength(10)
+  description: string;
 }
