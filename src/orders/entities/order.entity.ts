@@ -28,7 +28,6 @@ export class Order {
   @Column({ type: 'boolean', default: false })
   isDelivered: boolean;
 
-  @JoinTable()
   @ManyToMany((type) => Product, (product) => product.orders)
   products: Product[];
 

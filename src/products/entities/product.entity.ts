@@ -1,5 +1,11 @@
 import { Order } from 'src/orders/entities/order.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 
 @Entity('products')
 export class Product {
@@ -15,6 +21,7 @@ export class Product {
   @Column({ type: 'text' })
   description: string;
 
-  @ManyToMany((type) => Order, (order) => order.products)
+  @JoinTable()
+  @ManyToMany((type) => Order, (order) => order.products, { cascade: true })
   orders: Order[];
 }

@@ -8,6 +8,8 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { take } from 'rxjs';
 
 @Injectable()
 export class ProductsService {
@@ -16,13 +18,21 @@ export class ProductsService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
-  findAll() {
-    const products = this.productRepository.find();
+  findAll(paginationQuery: PaginationQueryDto) {
+    const { limit, offset } = paginationQuery;
+    const products = this.productRepository.find({
+      relations: ['orders'],
+      take: limit,
+      skip: offset,
+    });
     return products;
   }
 
   async findOne(id: string) {
-    const product = await this.productRepository.findOneBy({ id });
+    const product = await this.productRepository.findOne({
+      where: { id },
+      relations: ['orders'],
+    });
     if (!product) {
       throw new NotFoundException(`Product with ID ${id} not found`);
     }
